@@ -26,12 +26,22 @@ class StudentController extends Controller {
             'students' => $students]);
     }
 
-    public function create() {
+    public function create(Request $request) {
+        if ($request->isMethod('POST')) {
+            $data=$request->input('Student');
+            if (Student::create($data)) {
+                return redirect('student/index');
+            } else {
+                return redirect()->back();
+            }
+        }
         return view('student.create');
     }
 
     /**
      * 保存添加
+     * @param Request $request
+     * @return
      */
     public function save(Request $request) {
         $data = $request->input('Student');
