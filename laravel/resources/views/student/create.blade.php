@@ -5,6 +5,7 @@
         <div class="panel-heading">新增学生</div>
         <div class="panel-body">
             <form class="form-horizontal" method="post" action="">
+                {{csrf_field()}}
                 <div class="form-group">
                     <label for="name" class="col-sm-2 control-label">姓名</label>
 

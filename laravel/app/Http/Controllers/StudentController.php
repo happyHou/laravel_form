@@ -30,7 +30,7 @@ class StudentController extends Controller {
         if ($request->isMethod('POST')) {
             $data=$request->input('Student');
             if (Student::create($data)) {
-                return redirect('student/index');
+                return redirect('student/index')->with('success','添加成功!');
             } else {
                 return redirect()->back();
             }

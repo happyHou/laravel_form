@@ -107,9 +107,6 @@ Route::group(['middleware' => ['activity']], function () {
 //宣传页面
 Route::any('activity0', ['uses' => 'StudentController@activity0']);
 
-Route::get('student/index',['uses'=>'StudentController@index']);
-Route::any('student/create',['uses'=>'StudentController@create']);
-Route::any('student/save',['uses'=>'StudentController@save']);
 
 /*
 |--------------------------------------------------------------------------
@@ -118,7 +115,7 @@ Route::any('student/save',['uses'=>'StudentController@save']);
 |
 | This route group applies the "web" middleware group to every route
 | it contains. The "web" middleware group is defined in your HTTP
-| kernel and includes session state, CSRF protection, and more.
+| kernel and includes session state, CSRF(xss) protection, and more.
 |
 */
 
@@ -130,4 +127,8 @@ Route::group(['middleware' => ['web']], function () {
         'uses' => 'StudentController@session2'
     ]);
     Route::any('response', ['uses' => 'StudentController@response']);
+
+    Route::get('student/index', ['uses' => 'StudentController@index']);
+    Route::any('student/create', ['uses' => 'StudentController@create']);
+    Route::any('student/save', ['uses' => 'StudentController@save']);
 });
