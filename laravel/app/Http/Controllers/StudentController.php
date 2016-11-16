@@ -11,7 +11,6 @@ namespace App\Http\Controllers;
 
 use App\Student;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
@@ -28,9 +27,41 @@ class StudentController extends Controller {
 
     public function create(Request $request) {
         if ($request->isMethod('POST')) {
-            $data=$request->input('Student');
+            //1.控制器验证
+            //            $this->validate($request, [
+            //                'Student.name' => 'required|min:2|max:20',
+            //                'Student.age' => 'required|integer',
+            //                'Student.sex' => 'required|integer',
+            //            ],[
+            //                'required'=>':attribute 为必填项',
+            //                'min'=>':attribute 长度不符合要求',
+            //                'integer'=>':attribute 必须为整型',
+            //            ],[
+            //                'Student.name'=>'姓名',
+            //                'Student.age'=>'年龄',
+            //                'Student.sex'=>'性别',
+            //            ]);
+            //2.Validator类验证
+            $validator = \Validator::make($request->input(), [
+                'Student.name' => 'required|min:2|max:20',
+                'Student.age' => 'required|integer',
+                'Student.sex' => 'required|integer',
+            ], [
+                'required' => ':attribute 为必填项',
+                'min' => ':attribute 长度不符合要求',
+                'integer' => ':attribute 必须为整型',
+            ], [
+                'Student.name' => '姓名',
+                'Student.age' => '年龄',
+                'Student.sex' => '性别',
+            ]);
+            if ($validator->fails()) {
+                return redirect()->back()->withErrors($validator);
+            }
+
+            $data = $request->input('Student');
             if (Student::create($data)) {
-                return redirect('student/index')->with('success','添加成功!');
+                return redirect('student/index')->with('success', '添加成功!');
             } else {
                 return redirect()->back();
             }

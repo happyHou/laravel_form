@@ -27,7 +27,6 @@
             <!-- 中间内容区局 -->
     <div class="container">
         <div class="row">
-{{ Request::getPathInfo()}}
             <!-- 左侧菜单区域   -->
             <div class="col-md-3">
                 @section('leftmenu')
@@ -42,7 +41,6 @@
 
             <!-- 右侧内容区域 -->
             <div class="col-md-9">
-
 
 
                 @yield('content')

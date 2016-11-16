@@ -1,6 +1,7 @@
 @extends('common.layouts')
 
 @section('content')
+    @include('common.validator')
     <div class="panel panel-default">
         <div class="panel-heading">新增学生</div>
         <div class="panel-body">
@@ -13,7 +14,7 @@
                         <input type="text" name="Student[name]" class="form-control" id="name" placeholder="请输入学生姓名">
                     </div>
                     <div class="col-sm-5">
-                        <p class="form-control-static text-danger">姓名不能为空</p>
+                        <p class="form-control-static text-danger">{{$errors->first('Student.name')}}</p>
                     </div>
                 </div>
                 <div class="form-group">
@@ -23,7 +24,7 @@
                         <input type="text" name='Student[age]'  class="form-control" id="age" placeholder="请输入学生年龄">
                     </div>
                     <div class="col-sm-5">
-                        <p class="form-control-static text-danger">年龄只能为整数</p>
+                        <p class="form-control-static text-danger">{{$errors->first('Student.age')}}</p>
                     </div>
                 </div>
                 <div class="form-group">
@@ -41,7 +42,7 @@
                         </label>
                     </div>
                     <div class="col-sm-5">
-                        <p class="form-control-static text-danger">请选择性别</p>
+                        <p class="form-control-static text-danger">{{$errors->first('Student.sex')}}</p>
                     </div>
                 </div>
                 <div class="form-group">
