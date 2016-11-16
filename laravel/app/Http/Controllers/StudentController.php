@@ -56,7 +56,7 @@ class StudentController extends Controller {
                 'Student.sex' => '性别',
             ]);
             if ($validator->fails()) {
-                return redirect()->back()->withErrors($validator);
+                return redirect()->back()->withErrors($validator)->withInput();
             }
 
             $data = $request->input('Student');
