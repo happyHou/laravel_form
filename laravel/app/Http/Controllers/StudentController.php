@@ -20,12 +20,13 @@ class StudentController extends Controller {
      * 学生列表页
      */
     public function index() {
-        $students = Student::paginate(10);
+        $students = Student::paginate(5);
         return view('student.index', [
             'students' => $students]);
     }
 
     public function create(Request $request) {
+        $student = new Student();
         if ($request->isMethod('POST')) {
             //1.控制器验证
             //            $this->validate($request, [
@@ -66,7 +67,9 @@ class StudentController extends Controller {
                 return redirect()->back();
             }
         }
-        return view('student.create');
+        return view('student.create', [
+            'student' => $student
+        ]);
     }
 
     /**
@@ -85,6 +88,52 @@ class StudentController extends Controller {
             return redirect('student/index');
         } else {
             return redirect()->back();
+        }
+    }
+
+    public function update(Request $request, $id) {
+        $student = Student::find($id);
+        if ($request->isMethod('POST')) {
+            $this->validate($request, [
+                'Student.name' => 'required|min:2|max:20',
+                'Student.age' => 'required|integer',
+                'Student.sex' => 'required|integer',
+            ], [
+                'required' => ':attribute 为必填项',
+                'min' => ':attribute 长度不符合要求',
+                'integer' => ':attribute 必须为整型',
+            ], [
+                'Student.name' => '姓名',
+                'Student.age' => '年龄',
+                'Student.sex' => '性别',
+            ]);
+
+            $data = $request->input('Student');
+            $student->name = $data['name'];
+            $student->age = $data['age'];
+            $student->sex = $data['sex'];
+            if ($student->save()) {
+                return redirect('student/index')->with('success', '修改成功-' . $id);
+            }
+        }
+        return view('student.update', [
+            'student' => $student
+        ]);
+    }
+
+    public function detail($id) {
+        $student = Student::find($id);
+        return view('student.detail', [
+            'student' => $student
+        ]);
+    }
+
+    public function delete($id) {
+        $student = Student::find($id);
+        if ($student->delete()) {
+            return redirect('student/index')->with('success', '删除成功-' . $id);
+        } else {
+            return redirect('student/index')->with('success', '删除失败-' . $id);
         }
     }
 

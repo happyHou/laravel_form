@@ -32,7 +32,7 @@
                 @section('leftmenu')
                     <div class="list-group">
                         <a href="{{url('/student/index')}}" class="list-group-item
-                        {{ Request::getPathInfo()=='/student/index'?'active':'' }}">学生列表</a>
+                        {{ Request::getPathInfo()!='/student/create'?'active':'' }}">学生列表</a>
                         <a href="{{url('/student/create')}}" class="list-group-item
                         {{ Request::getPathInfo()=='/student/create'?'active':'' }}">新增学生</a>
                     </div>
